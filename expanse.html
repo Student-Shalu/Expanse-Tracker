@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expanse Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #1D2B53;
+            color: #FAEF5D;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ad2b6e;
+            text-align: center;
+            width: 600px;
+            padding: 30px;
+
+        }
+
+        .container #add {
+            background-color: #FAEF5D;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .total-amount {
+            text-align: right;
+        }
+
+        table,
+        th,
+        td {
+            width: 100%;
+            border: 1px solid #FAEF5D;
+            border-collapse: collapse;
+            font-family: sans-serif;
+        }
+
+        th,
+        td {
+            padding: 5px;
+            text-align: left;
+        }
+
+        .container h1 {
+            font-size: 4rem;
+            padding: 10px;
+            font-weight: 900;
+        }
+
+        form {
+            margin: 30px 0;
+        }
+
+        form input {
+            padding: 7px 10px;
+            font-size: 1rem;
+            background-color: transparent;
+            border: 1px solid #FAEF5D;
+            outline: none;
+        }
+
+        #expenseName {
+            width: 35%;
+            color: #FAEF5D;
+            text-transform: capitalize;
+        }
+
+        #expenseAmount {
+            width: 35%;
+            color: #FAEF5D;
+        }
+
+        .total-amount {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Expanse Tracker</h1>
+        <form action="" id="expense-form">
+            <input type="text" placeholder="Expanse Name" id="expenseName">
+            <input type="number" placeholder="Amount" id="expenseAmount">
+            <input type="button" name="" id="add" value="Add Expanse" onclick="addRow()">
+        </form>
+        <div class="expanse-table">
+            <table id="myTable">
+                <thead>
+                    <th style="width: 50%; background-color: #1D2B53;"> Expanse Name</th>
+                    <th style="width: 25%; background-color: #1D2B53;"> Amount </th>
+                    <th style="width: 25%; background-color: #1D2B53;"> Action</th>
+                    <!-- <th> Course </th> -->
+                </thead>
+                <tbody id="tableBody">
+
+                </tbody>
+            </table>
+            <div class="total-amount">
+                <strong>Total:</strong>
+                Rs.<span id="total-amount">0</span>
+            </div>
+        </div>
+
+    </div>
+    <script>
+
+        // let btn = document.getElementById("add");
+        function addRow() {
+            let expanse = document.getElementById('expenseName').value;
+            let amount = document.getElementById('expenseAmount').value;
+            let transactionForm = document.getElementById('expense-form');
+            let table = document.getElementById("tableBody");
+            let row = document.createElement("tr")
+            let c1 = document.createElement("td")
+            let c2 = document.createElement("td")
+            let c3 = document.createElement("td")
+            c1.innerText = `${expanse}`
+            c2.innerText = `${amount}`
+            c3.innerText = "Delete"
+            row.appendChild(c1);
+            row.appendChild(c2);
+            row.appendChild(c3);
+            table.appendChild(row);
+            c1.style.width = "50%";
+            c2.style.width = "25%";
+            c3.style.width = "25%";
+            c1.style.textTransform = "capitalize";
+            c3.style.color="#FF004D";
+
+            c3.addEventListener("click", function () {
+                table.removeChild(row);
+                updateTotalAmount();
+            });
+            updateTotalAmount();
+
+            transactionForm.reset();
+        }
+
+        function updateTotalAmount() {
+            let total = 0;
+            let rows = document.querySelectorAll("#myTable tbody tr");
+
+            rows.forEach(row => {
+                total += parseFloat(row.children[1].innerText);
+            });
+
+            document.getElementById("total-amount").innerHTML = `${total.toFixed(2)}`;
+        }
+
+        let addButton = document.getElementById("add");
+        // addButton.addEventListener("click", addRow);
+    </script>
+</body>
+
+</html>
